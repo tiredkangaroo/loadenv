@@ -2,6 +2,36 @@
 
 Loadenv provides two options to load from environment files.
 
+## Unmarshal
+Unmarshal loads environment variables from the filepaths specified (defaults to .env) as values in a struct.
+
+### Usage:
+```golang
+package main
+
+import (
+  "github.com/tiredkangaroo/loadenv"
+)
+
+type EnvironmentVariables struct {
+  USERNAME string // defaults to required, will error out if not provided
+  SSLMODE  bool `required:"false"` // not required because it is specified in the struct tag
+}
+
+func main() {
+  var environment EnvironmentVariables
+  err := loadenv.Unmarshal(&environment, ...filepaths string)
+  // handle err here
+  fmt.Println("username:", environment.USERNAME)
+}
+```
+
+### Errors:
+- reading a file fails
+- parsing a line in the file that has bad syntax
+- a required variable is missing from any of the files
+- the value provided for the key cannot be assigned into the type of the structfield
+
 ## Load
 Load loads environment variables from the filepaths specified (defaults to .env).
 
@@ -26,29 +56,6 @@ func main() {
 - parsing a line in the file that has bad syntax
 - the `setenv()` syscall fails 
 
-## Unmarshal
-Unmarshal loads environment variables from the filepaths specified (defaults to .env) as values in a struct.
-
-### Usage:
-```golang
-package main
-
-import (
-  "github.com/tiredkangaroo/loadenv"
-)
-
-type EnvironmentVariables struct {
-  USERNAME string // defaults to required, will error out if not provided
-  SSLMODE  bool `required:"false"` // not required because it is specified in the struct tag
-}
-
-func main() {
-  var environment EnvironmentVariables
-  err := loadenv.Unmarshal(&environment, ...filepaths string)
-  // handle err here
-  fmt.Println("username:", environment.USERNAME)
-}
-```
 
 ## Expected Environment File Syntax
 - All spaces in a line will be trimmed.
