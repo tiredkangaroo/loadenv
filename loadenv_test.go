@@ -18,7 +18,7 @@ func TestLoad(t *testing.T) {
 		t.Errorf(err.Error())
 		t.FailNow()
 	}
-	expected1 := "https://user1:password123@example.com:5432/mydatabase"
+	expected1 := "https://user1:password123@example.com:5432/mydatabase?sslmode=disable"
 	t.Logf("got: %v", os.Getenv("DatabaseConnectionURI"))
 	t.Logf("expected: %v", expected1)
 	if os.Getenv("DatabaseConnectionURI") != expected1 {

@@ -1,1 +1,1 @@
-DatabaseConnectionURI=https://user1:password123@example.com:5432/mydatabase
+DatabaseConnectionURI=https://user1:password123@example.com:5432/mydatabase?sslmode=disable

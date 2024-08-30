@@ -17,10 +17,10 @@ func parseLines(lines []string) (map[string]string, error) {
 			continue
 		}
 		ls := strings.Split(line, "=")
-		if len(ls) != 2 {
+		if len(ls) < 2 {
 			return nil, fmt.Errorf("bad syntax on line number %d.", i)
 		}
-		envVariables[ls[0]] = ls[1]
+		envVariables[ls[0]] = strings.Join(ls[1:], "=")
 	}
 	return envVariables, nil
 }
