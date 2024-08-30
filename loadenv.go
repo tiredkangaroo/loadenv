@@ -20,7 +20,7 @@ func parseLines(lines []string) (map[string]string, error) {
 		if len(ls) < 2 {
 			return nil, fmt.Errorf("bad syntax on line number %d.", i)
 		}
-		envVariables[ls[0]] = strings.Join(ls[1:], "=")
+		envVariables[strings.TrimSpace(ls[0])] = strings.TrimSpace(strings.Join(ls[1:], "="))
 	}
 	return envVariables, nil
 }
