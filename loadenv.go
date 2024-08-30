@@ -160,6 +160,16 @@ func Unmarshal(s any, filepaths ...string) error {
 			}
 			vpui64 := (*uint64)(unsafe.Pointer(&v))
 			field.SetUint(*vpui64)
+		case reflect.Bool:
+			v, err := strconv.ParseBool(value)
+			if err != nil {
+				return fmt.Errorf("environment variable %s has value %s. it cannot be made into type %s.",
+					fieldt.Name,
+					value,
+					fieldt.Type.Kind().String(),
+				)
+			}
+			field.SetBool(v)
 		default:
 			return fmt.Errorf("unsupported field kind: %s", field.Type().Kind().String())
 		}
